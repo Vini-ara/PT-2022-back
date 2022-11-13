@@ -29,7 +29,7 @@ Processo Trainee 2022.2. Back-end do projeto de Gestão de Membros do Grupo 01
 ## Postgres
 ```bash
 # Para atualizar o sistema
-$ sudo apt update && sudo apt upgrade
+$ sudo apt update && sudo apt upgrade -y
 
 # Baixar e instalar o postgres
 $ sudo apt install postgresql postgresql-contrib libpq-dev -y
