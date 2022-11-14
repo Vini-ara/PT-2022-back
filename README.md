@@ -26,7 +26,7 @@
 
 Processo Trainee 2022.2. Back-end do projeto de Gestão de Membros do Grupo 01
 
-## Postgres
+## Instalação do Postgres pelo WSL
 ```bash
 # Para atualizar o sistema
 $ sudo apt update && sudo apt upgrade -y
