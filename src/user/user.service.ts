@@ -1,6 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { stringify } from 'querystring';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserAdminDto } from './dto/updateUserAdmin.dto';
+import { UpdateUserArchivedDto } from './dto/updateUserArchived.dto';
+
+const defaultUserResponse = {
+  id: true,
+  name: true,
+  picture: true,
+};
 
 @Injectable()
 export class UserService {
@@ -53,12 +62,45 @@ export class UserService {
         pdi_updated_at: new Date(),
       },
       select: {
-        id: true,
-        name: true,
-        picture: true,
+        ...defaultUserResponse,
       },
     });
 
     return users;
+  }
+
+  async updateAdmin(id: string, updateAdminArchivedDto: UpdateUserAdminDto) {
+    const user = await this.prismaService.user.update({
+      where: {
+        id,
+      },
+      data: {
+        ...updateAdminArchivedDto,
+      },
+      select: {
+        ...defaultUserResponse,
+      },
+    });
+
+    return user;
+  }
+
+  async updateArchived(
+    id: string,
+    updateUserArchivedDto: UpdateUserArchivedDto,
+  ) {
+    const user = await this.prismaService.user.update({
+      where: {
+        id,
+      },
+      data: {
+        ...updateUserArchivedDto,
+      },
+      select: {
+        ...defaultUserResponse,
+      },
+    });
+
+    return user;
   }
 }
