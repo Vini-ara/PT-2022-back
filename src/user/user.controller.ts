@@ -1,7 +1,14 @@
-import { Controller, Get, Param, Post, Patch, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Patch,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserAdminDto } from './dto/updateUserAdmin.dto';
-import { UpdateUserArchivedDto } from './dto/updateUserArchived.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -20,7 +27,7 @@ export class UserController {
   }
 
   @Post(':id')
-  async createUser(@Param('id') id: string) {
+  async create(@Param('id') id: string) {
     const user: CreateUserDto = {
       id: '2',
       name: 'bigas',
@@ -31,18 +38,7 @@ export class UserController {
   }
 
   @Patch(':id')
-  async updateAdmin(
-    @Param('id') id: string,
-    @Body() updateUserAdminDto: UpdateUserAdminDto,
-  ) {
-    return this.userService.updateAdmin(id, updateUserAdminDto);
-  }
-
-  @Patch(':id')
-  async updateArchived(
-    @Param('id') id: string,
-    @Body() updateUserArchivedDto: UpdateUserArchivedDto,
-  ) {
-    return this.userService.updateArchived(id, updateUserArchivedDto);
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.updateUser(id, updateUserDto);
   }
 }

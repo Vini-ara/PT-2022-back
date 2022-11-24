@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { stringify } from 'querystring';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserAdminDto } from './dto/updateUserAdmin.dto';
-import { UpdateUserArchivedDto } from './dto/updateUserArchived.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 const defaultUserResponse = {
   id: true,
   name: true,
   picture: true,
+  is_admin: true,
 };
 
 @Injectable()
@@ -69,32 +68,13 @@ export class UserService {
     return users;
   }
 
-  async updateAdmin(id: string, updateAdminArchivedDto: UpdateUserAdminDto) {
+  async updateUser(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.prismaService.user.update({
       where: {
         id,
       },
       data: {
-        ...updateAdminArchivedDto,
-      },
-      select: {
-        ...defaultUserResponse,
-      },
-    });
-
-    return user;
-  }
-
-  async updateArchived(
-    id: string,
-    updateUserArchivedDto: UpdateUserArchivedDto,
-  ) {
-    const user = await this.prismaService.user.update({
-      where: {
-        id,
-      },
-      data: {
-        ...updateUserArchivedDto,
+        ...updateUserDto,
       },
       select: {
         ...defaultUserResponse,
