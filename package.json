@@ -30,6 +30,8 @@
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "4.6.0",
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "class-validator": "^0.13.2",
     "google-auth-library": "^8.7.0",
     "lint-staged": "^13.0.3",

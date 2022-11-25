@@ -17,6 +17,7 @@ model User {
   pdi_updated_at DateTime
   name           String
   picture        String
+  refreshToken   String?
   answer         Answer[]
 }
 

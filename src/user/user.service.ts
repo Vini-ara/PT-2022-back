@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import bcrypt from 'bcrypt';
 
 const defaultUserResponse = {
   id: true,
@@ -82,5 +83,65 @@ export class UserService {
     });
 
     return user;
+  }
+
+  async updateRefreshToken(id: string, token: string) {
+    const hashedToken = await bcrypt.hash(token, await bcrypt.genSalt());
+
+    const user = await this.prismaService.user.update({
+      where: { id },
+      data: {
+        refreshToken: hashedToken,
+      },
+      select: {
+        ...defaultUserResponse,
+      },
+    });
+
+    const res = {
+      id: user.id,
+      name: user.name,
+      is_admin: user.is_admin,
+    };
+
+    return res;
+  }
+
+  async verifyRefreshToken(id: string, token: string) {
+    const user = await this.prismaService.user.findUniqueOrThrow({
+      where: { id },
+    });
+
+    if (
+      !user?.refreshToken ||
+      !(await bcrypt.compare(token, user.refreshToken))
+    ) {
+      throw new UnauthorizedException();
+    }
+
+    const res = {
+      id: user.id,
+      name: user.name,
+      is_admin: user.is_admin,
+    };
+
+    return res;
+  }
+
+  async removeRefreshToken(id: string) {
+    const user = await this.prismaService.user.update({
+      where: { id },
+      data: {
+        refreshToken: null,
+      },
+    });
+
+    const res = {
+      id: user.id,
+      name: user.name,
+      is_admin: user.is_admin,
+    };
+
+    return res;
   }
 }

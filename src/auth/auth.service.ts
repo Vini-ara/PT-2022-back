@@ -28,6 +28,21 @@ export class AuthService {
     };
   }
 
+  async generateJwtRefreshToken(id: string, name: string, is_admin: boolean) {
+    const payload = { sub: id, name, is_admin };
+
+    const token = this.jwtService.sign(payload, {
+      secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      expiresIn: this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME'),
+    });
+
+    const cookie = `Refresh=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
+      'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
+    )}`;
+
+    return { token, cookie };
+  }
+
   async validateGoogleUser(token: string) {
     try {
       const createUserDto = await this.verifyGoogleToken(token);
