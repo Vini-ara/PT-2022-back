@@ -19,6 +19,9 @@ export class UserEntity implements User {
   @IsString()
   name: string;
 
+  @IsString()
+  refreshToken: string;
+
   @IsNotEmpty()
   @IsString()
   picture: string;

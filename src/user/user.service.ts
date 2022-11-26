@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 const defaultUserResponse = {
   id: true,
@@ -86,7 +86,8 @@ export class UserService {
   }
 
   async updateRefreshToken(id: string, token: string) {
-    const hashedToken = await bcrypt.hash(token, await bcrypt.genSalt());
+    console.log(token);
+    const hashedToken = await bcrypt.hash(token, 10);
 
     const user = await this.prismaService.user.update({
       where: { id },
