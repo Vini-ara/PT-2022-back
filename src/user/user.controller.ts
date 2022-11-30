@@ -1,4 +1,6 @@
 import { Controller, Get, Param, Patch, Body, UseGuards } from '@nestjs/common';
+import { EnsureAdminGuard } from 'src/auth/guard/ensure-admin.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
@@ -6,17 +8,22 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(EnsureAdminGuard)
   @Get()
   async getUsers() {
     return this.userService.getUsers();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async getUser(@Param('id') id: string) {
     console.log(id);
     return this.userService.getUser(id);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @UseGuards(EnsureAdminGuard)
   @Patch(':id')
   async update(
     @Param('id') id: string,
