@@ -86,7 +86,6 @@ export class UserService {
   }
 
   async updateRefreshToken(id: string, token: string) {
-    console.log(token);
     const hashedToken = await bcrypt.hash(token, 10);
 
     const user = await this.prismaService.user.update({

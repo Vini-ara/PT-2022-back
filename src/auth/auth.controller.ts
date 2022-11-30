@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Get,
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
@@ -42,13 +43,13 @@ export class AuthController {
       refreshToken.token,
     );
 
-    req.res.setHeader('Set-cookie', refreshToken.token);
+    req.res.setHeader('Set-cookie', refreshToken.cookie);
 
     return { accessToken, expiresIn, user };
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('logout')
+  @Get('logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Req() request: AuthRequest) {
     await this.userService.removeRefreshToken(request.user.id);
@@ -62,7 +63,7 @@ export class AuthController {
   }
 
   @UseGuards(JwtRefreshGuard)
-  @Post('refresh')
+  @Get('refresh')
   @HttpCode(HttpStatus.OK)
   async refresh(@Req() request: AuthRequest) {
     const { user } = request;
