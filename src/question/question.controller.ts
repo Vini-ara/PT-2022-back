@@ -17,11 +17,11 @@ export class QuestionController {
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   async getQuestion(@Param('id') id: number) {
-    return this.questionService.getQuestion(id);
+    return this.questionService.getQuestion(Number(id));
   }
 
   @UseGuards(EnsureAdminGuard)
-  @Post('craete')
+  @Post()
   async createQuestion(@Body() createQuestionDto: CreateQuestionDto) {
     return this.questionService.createQuestion(createQuestionDto);
   }
