@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
+import { UpdateAnswerDto } from './dto/upadte-answer.dto';
 
 @Injectable()
 export class AnswerService {
@@ -19,6 +20,17 @@ export class AnswerService {
       where: {
         userId,
         questionId,
+      },
+    });
+  }
+
+  async updateAnswer(id: number, updateAnswerDto: UpdateAnswerDto) {
+    return this.prismaService.answer.update({
+      where: {
+        id,
+      },
+      data: {
+        ...updateAnswerDto,
       },
     });
   }
