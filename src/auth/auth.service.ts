@@ -40,7 +40,7 @@ export class AuthService {
       )}s`,
     });
 
-    const cookie = `Refresh=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
+    const cookie = `Refresh=${token}; HttpOnly; SameSite=None; Secure; Path=/; Max-Age=${this.configService.get(
       'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
     )}`;
 

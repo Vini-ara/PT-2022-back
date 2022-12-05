@@ -56,7 +56,7 @@ export class AuthController {
 
     request.res.setHeader(
       'Set-cookie',
-      'Refresh=; HttpOnly; Path=/; Max-Age=0',
+      'Refresh=; HttpOnly; SameSite=None; Secure; Path=/; Max-Age=0',
     );
 
     return { message: 'Logged out' };
