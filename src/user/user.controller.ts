@@ -8,7 +8,6 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard)
   @UseGuards(EnsureAdminGuard)
   @Get()
   async getUsers() {
@@ -21,7 +20,6 @@ export class UserController {
     return this.userService.getUser(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @UseGuards(EnsureAdminGuard)
   @Patch(':id')
   async update(

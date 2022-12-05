@@ -9,6 +9,7 @@ async function bootstrap() {
   app.enableCors({
     origin: 'https://gestaodemembroscjr.vercel.app',
     credentials: true,
+    exposedHeaders: ['set-cookie'],
   });
 
   app.useGlobalPipes(
