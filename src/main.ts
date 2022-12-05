@@ -10,6 +10,7 @@ async function bootstrap() {
     origin: 'https://gestaodemembroscjr.vercel.app',
     credentials: true,
     exposedHeaders: ['Set-cookie'],
+    allowedHeaders: ['Content-type', 'Origin', 'Accept'],
   });
 
   app.useGlobalPipes(
