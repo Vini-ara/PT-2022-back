@@ -47,6 +47,7 @@ export class UserService {
         id: true,
         name: true,
         picture: true,
+        archived: true,
         is_admin: true,
         pdi_updated_at: true,
       },
